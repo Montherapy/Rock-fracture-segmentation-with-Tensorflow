@@ -41,7 +41,7 @@ The resulting image is saved in the ``result_fig`` folder.
 
 ## Segmentation result example
 
-![image](./result_fig/result_3.jpg)
-![image](./result_fig/result_17.jpg)
-![image](./result_fig/result_18.jpg)
+![image](./result_fig/result_image1.jpg)
+![image](./result_fig/result_image2.jpg)
+![image](./result_fig/result_image3.jpg)
 
