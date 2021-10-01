@@ -30,7 +30,7 @@ def upconv(inputs, filter, channel_rate=2, at_bottom_of_network6=False):
 	output_channel = input_channel//channel_rate
 	if at_bottom_of_network6:
 		output_channel = 256
-	return tf.nn.conv2d_transpose(inputs,filter= filter, output_shape=[batch, output_height, output_width, output_channel], strides=[1, 2, 2, 1],padding='SAME')
+	return tf.nn.conv2d_transpose(inputs,filter= filter, output_shape=tf.stack([batch, output_height, output_width, output_channel]), strides=[1, 2, 2, 1],padding='SAME')
 
 def batchnorm_activation(inputs, is_training, scope, dropout=False, keep_prob=1., norm_type='batch_norm', group=32):
 	if norm_type =='batch_norm':
