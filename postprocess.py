@@ -5,6 +5,7 @@ import pydensecrf.densecrf as dcrf
 from pydensecrf.utils import unary_from_softmax, create_pairwise_bilateral
 import matplotlib.pyplot as plt
 import os
+from tqdm import tqdm
 
 x_test = np.load("x_test.npy")
 y_test = np.load("y_test.npy")
@@ -18,7 +19,7 @@ def fc_crf(softmax, Gsxy, Gcompat, Bsxy, Bsrgb, Bcompat, step, rgbim, savefigure
 	"""
 
 	output = []
-	for i in range(softmax.shape[0]):
+	for i in tqdm(range(softmax.shape[0])):
 		im = softmax[i]
 		w = im.shape[0]
 		h = im.shape[1]
@@ -45,22 +46,22 @@ def fc_crf(softmax, Gsxy, Gcompat, Bsxy, Bsrgb, Bcompat, step, rgbim, savefigure
 			pass
 		for i in range(softmax.shape[0]):
 			fig, ax = plt.subplots(1, 4, sharex=True, sharey=True, figsize=(12, 3))
+			plt.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=0.02, hspace=None)
 			ax[0].imshow(x_test[i, ...], aspect="auto")
 			ax[1].imshow(y_test[i, ..., 1], aspect="auto", cmap=plt.cm.gist_stern)
 			ax[2].imshow(prediction[i], aspect="auto", cmap=plt.cm.gist_stern)
 			ax[3].imshow(output[i], aspect="auto", cmap=plt.cm.gist_stern)
-			ax[0].set_title("Network Input")
+			ax[0].set_title("Network input")
 			ax[1].set_title("Ground truth")
-			ax[2].set_title("Previous")
+			ax[2].set_title("Network output")
 			ax[3].set_title("Postprocessing")
-			ax[0].axis('Off')
-			ax[1].axis('Off')
-			ax[2].axis('Off')
-			ax[3].axis('off')
+			ax[0].set(xticks=[], yticks=[])
+			ax[1].set(xticks=[], yticks=[])
+			ax[2].set(xticks=[], yticks=[])
+			ax[3].set(xticks=[], yticks=[])
 			fig.tight_layout()
 			# plt.show()
-			fig.savefig("./result_fig/result_%d.jpg" % i, dpi=100, bbox_inches='tight',
-						pad_inches=0)
+			fig.savefig("./result_fig/result_%d.jpg" % i, dpi=100, bbox_inches='tight',	pad_inches=0)
 
 	return output
 
